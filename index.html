@@ -95,8 +95,25 @@ nav.scrolled{background:rgba(11,11,14,.85);backdrop-filter:blur(14px);border-col
 .mute-btn:hover{color:var(--white);border-color:var(--gray2)}
 .mute-btn svg{width:16px;height:16px}
 .nav-toggle{display:none}
-
+  
+/* ---------- hero background image ---------- */
+.hero-bg{
+  position:absolute;inset:0;z-index:-2;pointer-events:none;
+  background-image:url('assets/hero.jpg');
+  background-size:cover;
+  background-position:center;
+  opacity:.38;
+}
+/* dark wash so text stays readable over the image */
+.hero-bg::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom, rgba(11,11,14,.55) 0%, rgba(11,11,14,.25) 40%, var(--ink) 100%),
+    radial-gradient(ellipse at center, transparent 30%, rgba(11,11,14,.6) 100%);
+}
 /* ---------- hero ---------- */
+
+  
 .hero{
   min-height:100svh;position:relative;display:flex;flex-direction:column;
   justify-content:center;align-items:center;text-align:center;
@@ -315,6 +332,7 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
 
 <!-- ================= HERO ================= -->
 <header class="hero" id="top">
+  <div class="hero-bg"></div>
   <div class="hero-glow"></div>
 
   <div class="hero-eyebrow"><b>RedShift Productions</b>presents</div>
@@ -332,8 +350,8 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
 <div class="stats">
   <div class="stats-inner">
     <!-- data-count values below are fallbacks; live Roblox numbers replace them when available -->
-    <div class="stat reveal"><div class="stat-num"><span class="count" id="statMembers" data-count="1400000">0</span><em>+</em></div><div class="stat-label">Community Members</div></div>
-    <div class="stat reveal d1"><div class="stat-num"><span class="count" id="statVisits" data-count="1000000">0</span><em>+</em></div><div class="stat-label">Total Visits</div></div>
+    <div class="stat reveal"><div class="stat-num"><span class="count" id="statMembers" data-count="1400000">0</span><em>+</em></div><div class="stat-label">Members</div></div>
+    <div class="stat reveal d1"><div class="stat-num"><span class="count" id="statVisits" data-count="1000000">0</span><em>+</em></div><div class="stat-label">Visits</div></div>
     <div class="stat reveal d2"><div class="stat-num"><span class="count" id="statFavs" data-count="10000">0</span><em>+</em></div><div class="stat-label">Favorites</div></div>
     <div class="stat reveal d3"><div class="stat-num"><span class="count" id="statRating" data-count="90">0</span><em>%</em></div><div class="stat-label">Rating</div></div>
   </div>
@@ -355,7 +373,7 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
       </div>
       <div class="game-info reveal d1">
         <h3>Break<span>out</span></h3>
-        <p class="game-desc">i was too lazy to put a lorum ipson text, but i can make certain text in this text bolded <b>like this</b> but it depends i can change color and whatnot, anyway, you could honestly just put your game bio here. </p>
+        <p class="game-desc">i was too lazy to put a lorum ipson text, but i can make certain text in this text bolded <b>like this</b> but it depends i can change color and whatnot, anyway, you could honestly just put your game bio here. also all stats here is updated in real time using an API</p>
         <div class="game-meta">
           <div><b id="metaPlaying">—</b><span>Players</span></div>
           <div><b id="metaVisits">—</b><span>Visits</span></div>
