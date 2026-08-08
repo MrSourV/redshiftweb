@@ -95,29 +95,38 @@ nav.scrolled{background:rgba(11,11,14,.85);backdrop-filter:blur(14px);border-col
 .mute-btn:hover{color:var(--white);border-color:var(--gray2)}
 .mute-btn svg{width:16px;height:16px}
 .nav-toggle{display:none}
-  
-/* ---------- hero background image ---------- */
-.hero-bg{
-  position:absolute;inset:0;z-index:-2;pointer-events:none;
-  background-image:url('assets/hero.jpg');
-  background-size:cover;
-  background-position:center;
-  opacity:.38;
-}
-/* dark wash so text stays readable over the image */
-.hero-bg::after{
-  content:"";position:absolute;inset:0;
-  background:
-    linear-gradient(to bottom, rgba(11,11,14,.55) 0%, rgba(11,11,14,.25) 40%, var(--ink) 100%),
-    radial-gradient(ellipse at center, transparent 30%, rgba(11,11,14,.6) 100%);
-}
-/* ---------- hero ---------- */
 
-  
+/* ---------- hero ---------- */
 .hero{
   min-height:100svh;position:relative;display:flex;flex-direction:column;
   justify-content:center;align-items:center;text-align:center;
   padding:120px 24px 80px;overflow:hidden;
+}
+/* ---------- hero background slideshow ---------- */
+.hero-bg{
+  position:absolute;inset:0;z-index:-2;pointer-events:none;overflow:hidden;
+}
+.hero-slide{
+  position:absolute;inset:0;
+  background-size:cover;
+  background-position:center 35%;   /* biases toward faces, not floor */
+  opacity:0;
+  transition:opacity 1.6s ease-in-out;
+  will-change:opacity;
+  transform:scale(1.06);            /* subtle overscan hides softness at edges */
+  animation:heroDrift 24s ease-in-out infinite alternate;
+}
+.hero-slide.active{opacity:.42}
+@keyframes heroDrift{
+  from{transform:scale(1.06) translate(0,0)}
+  to{transform:scale(1.12) translate(-1.5%, -1%)}
+}
+/* dark wash so text stays readable over the image */
+.hero-bg::after{
+  content:"";position:absolute;inset:0;z-index:1;
+  background:
+    linear-gradient(to bottom, rgba(11,11,14,.5) 0%, rgba(11,11,14,.35) 40%, var(--ink) 100%),
+    radial-gradient(ellipse at center, rgba(11,11,14,.15) 25%, rgba(11,11,14,.72) 100%);
 }
 .hero-glow{
   position:absolute;left:50%;top:58%;transform:translate(-50%,-50%);
@@ -292,6 +301,7 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .reveal{opacity:1;transform:none}
+  .hero-slide{animation:none;transform:none}
   html{scroll-behavior:auto}
 }
 
@@ -332,7 +342,11 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
 
 <!-- ================= HERO ================= -->
 <header class="hero" id="top">
-  <div class="hero-bg"></div>
+  <div class="hero-bg">
+    <div class="hero-slide" style="background-image:url('assets/hero.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('assets/hero2.webp')"></div>
+    <div class="hero-slide" style="background-image:url('assets/hero3.webp')"></div>
+  </div>
   <div class="hero-glow"></div>
 
   <div class="hero-eyebrow"><b>RedShift Productions</b>presents</div>
@@ -465,6 +479,21 @@ const io = new IntersectionObserver(entries => {
 }, {threshold:.15, rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(el => reduced ? el.classList.add('in') : io.observe(el));
 
+/* ---------- hero slideshow ---------- */
+(function(){
+  const slides = document.querySelectorAll('.hero-slide');
+  if (!slides.length) return;
+  let i = 0;
+  slides[0].classList.add('active');
+  if (slides.length > 1 && !reduced) {
+    setInterval(() => {
+      slides[i].classList.remove('active');
+      i = (i + 1) % slides.length;
+      slides[i].classList.add('active');
+    }, 6000); // 6s per image
+  }
+})();
+
 /* ---------- number formatting ---------- */
 const compact = n => {
   if (n >= 1e9) return (n/1e9).toFixed(n%1e9 ? 1 : 0) + 'B';
@@ -507,10 +536,6 @@ async function loadRoblox() {
         document.getElementById('metaVisits').textContent = compact(g.visits);
         document.getElementById('metaFavs').textContent = compact(g.favoritedCount);
         document.getElementById('metaPlaying').textContent = compact(g.playing);
-        if (g.playing > 0) {
-          document.getElementById('liveCount').textContent = compact(g.playing);
-          document.getElementById('liveChip').classList.add('on');
-        }
       }).catch(()=>{});
 
     // votes -> rating %
