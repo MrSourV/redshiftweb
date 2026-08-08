@@ -108,18 +108,18 @@ nav.scrolled{background:rgba(11,11,14,.85);backdrop-filter:blur(14px);border-col
 }
 .hero-slide{
   position:absolute;inset:0;
-  background-size:cover;
-  background-position:center 35%;   /* biases toward faces, not floor */
+  background-size:112%;             /* small fixed oversize so panning never shows an edge */
+  background-position:50% 35%;      /* biases toward faces, not floor */
+  background-repeat:no-repeat;
   opacity:0;
   transition:opacity 1.6s ease-in-out;
   will-change:opacity;
-  transform:scale(1.06);            /* subtle overscan hides softness at edges */
-  animation:heroDrift 24s ease-in-out infinite alternate;
+  animation:heroPan 26s ease-in-out infinite alternate;
 }
 .hero-slide.active{opacity:.42}
-@keyframes heroDrift{
-  from{transform:scale(1.06) translate(0,0)}
-  to{transform:scale(1.12) translate(-1.5%, -1%)}
+@keyframes heroPan{
+  from{background-position:47% 32%}
+  to{background-position:53% 38%}
 }
 /* dark wash so text stays readable over the image */
 .hero-bg::after{
@@ -344,12 +344,12 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
 <header class="hero" id="top">
   <div class="hero-bg">
     <div class="hero-slide" style="background-image:url('assets/hero.jpg')"></div>
-    <div class="hero-slide" style="background-image:url('assets/hero2.webp')"></div>
     <div class="hero-slide" style="background-image:url('assets/hero1.webp')"></div>
+    <div class="hero-slide" style="background-image:url('assets/hero2.webp')"></div>
   </div>
   <div class="hero-glow"></div>
 
-  <div class="hero-eyebrow"><b>RedShift</b>presents</div>
+  <div class="hero-eyebrow"><b>RedShift Productions</b>presents</div>
   <h1>Break<span class="shift">out</span></h1>
   <p class="hero-sub">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere.</p>
 
@@ -490,7 +490,7 @@ document.querySelectorAll('.reveal').forEach(el => reduced ? el.classList.add('i
       slides[i].classList.remove('active');
       i = (i + 1) % slides.length;
       slides[i].classList.add('active');
-    }, 4000); // testing time
+    }, 4000); // 4s per image
   }
 })();
 
