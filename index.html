@@ -87,6 +87,7 @@ nav.scrolled{background:rgba(11,11,14,.85);backdrop-filter:blur(14px);border-col
 .btn.solid::before{background:#fff}
 .btn.solid:hover{color:var(--ink)}
 .btn.small{padding:10px 20px;font-size:12px}
+.btn-play{width:9px;height:11px;flex:0 0 auto;display:block}
 .mute-btn{
   width:38px;height:38px;display:flex;align-items:center;justify-content:center;
   border:1px solid var(--line);background:transparent;color:var(--gray);cursor:pointer;
@@ -307,12 +308,21 @@ section{position:relative}
   from{transform:translate3d(0,0,0)}
   to{transform:translate3d(-50%,0,0)}
 }
-.dev{flex:0 0 auto;width:clamp(140px,15vw,182px);text-align:center}
+/* cards are links, so they opt back into pointer events */
+.dev{
+  flex:0 0 auto;width:clamp(140px,15vw,182px);text-align:center;
+  pointer-events:auto;display:block;color:inherit;
+}
+.marquee:hover .marquee-track{animation-play-state:paused}
 .dev-av{
   position:relative;aspect-ratio:1;overflow:hidden;
   border:1px solid var(--line);background:linear-gradient(160deg,#191722,#0d0c11 70%);
+  transition:border-color .25s,transform .35s cubic-bezier(.2,.8,.2,1);
 }
 .dev-av img{width:100%;height:100%;object-fit:cover}
+.dev:hover .dev-av{border-color:var(--red);transform:translateY(-4px)}
+.dev:hover .dev-name{color:var(--red)}
+.dev-name{transition:color .25s}
 .dev-name{
   margin-top:14px;font-family:var(--display);font-weight:600;
   font-size:14px;letter-spacing:.06em;text-transform:uppercase;
@@ -421,7 +431,7 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
       <svg id="sndOn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
       <svg id="sndOff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
     </button>
-    <a class="btn solid small" href="https://www.roblox.com/games/85247362414047/Breakout" target="_blank" rel="noopener" data-sfx>▶&nbsp;<span>Play Now</span></a>
+    <a class="btn solid small" href="https://www.roblox.com/games/85247362414047/Breakout" target="_blank" rel="noopener" data-sfx><svg class="btn-play" viewBox="0 0 12 14" aria-hidden="true"><polygon points="0,0 12,7 0,14" fill="currentColor"/></svg><span>Play Now</span></a>
   </div>
 </nav>
 
@@ -694,7 +704,8 @@ async function loadDevs(){
     // pull each role's members, keeping the role name attached to each person
     const groups = await Promise.all(wanted.map(async role => {
       const res = await (await fetch(`https://groups.roproxy.com/v1/groups/${GROUP_ID}/roles/${role.id}/users?limit=100&sortOrder=Asc`)).json();
-      return (res.data || []).map(u => ({...u, roleName: role.name}));
+      const label = role.rank === 254 ? 'Creator' : role.name;   // 254 is always the game's creator
+      return (res.data || []).map(u => ({...u, roleLabel: label}));
     }));
 
     const users = groups.flat().slice(0, 30);
@@ -706,13 +717,13 @@ async function loadDevs(){
     const byId = {};
     (thumbs.data || []).forEach(t => { byId[t.targetId] = t.imageUrl; });
 
-    const esc = t => String(t).replace(/[<>&]/g,'');
+    const esc = t => String(t).replace(/[<>&"]/g,'');
     const card = u => `
-      <div class="dev">
+      <a class="dev" href="https://www.roblox.com/users/${u.userId}/profile" target="_blank" rel="noopener">
         <div class="dev-av">${byId[u.userId] ? `<img src="${byId[u.userId]}" alt="" loading="lazy">` : ''}</div>
         <div class="dev-name">${esc(u.displayName || u.username)}</div>
-        <div class="dev-role">${esc(u.roleName)}</div>
-      </div>`;
+        <div class="dev-role">${esc(u.roleLabel)}</div>
+      </a>`;
 
     // duplicated so the -50% loop is seamless
     const html = users.map(card).join('');
