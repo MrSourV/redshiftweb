@@ -105,7 +105,7 @@ nav.scrolled{background:rgba(11,11,14,.85);backdrop-filter:blur(14px);border-col
 }
 #preload.done{opacity:0;visibility:hidden;pointer-events:none}
 #preload img{
-  width:78px;height:auto;
+  width:clamp(120px,15vw,168px);height:auto;
   animation:loaderSpin 1.5s cubic-bezier(.65,0,.35,1) infinite,
             loaderPulse 3s ease-in-out infinite;
 }
@@ -126,6 +126,7 @@ body.loading .hero-sub,
 body.loading .hero-cta{animation-play-state:paused}
 @media (prefers-reduced-motion:reduce){
   #preload img{animation:none}
+  .marquee-track{animation:none}
 }
 
 /* ---------- hero ---------- */
@@ -282,17 +283,70 @@ section{position:relative}
 }
 .role p{color:var(--gray);font-size:14.5px}
 
-/* ---------- studio ---------- */
+/* ---------- developers ---------- */
 .studio{background:var(--ink2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.studio-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(40px,6vw,90px);align-items:start}
-.studio-copy h2{
+.devs-head{text-align:center;margin-bottom:clamp(40px,6vw,68px)}
+.devs-head h2{
   font-family:var(--display);font-weight:600;text-transform:uppercase;
   font-size:clamp(30px,4.2vw,50px);line-height:1.04;
 }
-.studio-copy h2 span{color:var(--red)}
-.studio-copy p{color:var(--gray);max-width:560px}
-.studio-copy p+p{margin-top:20px}
-.studio-copy p b{color:var(--white);font-weight:500}
+.devs-head h2 span{color:var(--red)}
+.devs-head p{margin:16px auto 0;max-width:440px;color:var(--gray);font-size:15px}
+
+/* horizontal auto-scroll — not user-scrollable */
+.marquee{
+  position:relative;overflow:hidden;pointer-events:none;user-select:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+}
+.marquee-track{
+  display:flex;gap:22px;width:max-content;
+  animation:marq 46s linear infinite;
+}
+@keyframes marq{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(-50%,0,0)}
+}
+.dev{flex:0 0 auto;width:clamp(140px,15vw,182px);text-align:center}
+.dev-av{
+  position:relative;aspect-ratio:1;overflow:hidden;
+  border:1px solid var(--line);background:linear-gradient(160deg,#191722,#0d0c11 70%);
+}
+.dev-av img{width:100%;height:100%;object-fit:cover}
+.dev-name{
+  margin-top:14px;font-family:var(--display);font-weight:600;
+  font-size:14px;letter-spacing:.06em;text-transform:uppercase;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.dev-role{
+  margin-top:5px;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--red);opacity:.85;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+/* ---------- partner ---------- */
+.partner{position:relative;border-top:1px solid var(--line);overflow:hidden}
+.partner::before{
+  content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);
+  width:min(760px,100%);height:100%;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 40%,rgba(232,37,51,.10),transparent 65%);
+}
+.partner-inner{
+  position:relative;max-width:1200px;margin:0 auto;
+  padding:clamp(64px,9vw,110px) clamp(20px,4vw,40px);
+  display:flex;flex-direction:column;align-items:center;text-align:center;gap:28px;
+}
+.partner-label{
+  font-family:var(--display);font-weight:600;text-transform:uppercase;
+  font-size:clamp(22px,3.2vw,38px);line-height:1;letter-spacing:.02em;
+}
+.partner-logo{
+  display:inline-block;pointer-events:auto;
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),filter .35s;
+  filter:drop-shadow(0 10px 34px rgba(0,0,0,.5));
+}
+.partner-logo img{width:min(420px,74vw);height:auto}
+.partner-logo:hover{transform:translateY(-5px) scale(1.02);filter:drop-shadow(0 16px 44px rgba(232,37,51,.28))}
 
 /* ---------- community ---------- */
 .community .wrap{text-align:center}
@@ -337,7 +391,6 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
 @media (max-width:960px){
   .game-card{grid-template-columns:1fr}
   .game-art{max-width:440px}
-  .studio-grid{grid-template-columns:1fr}
   .roles{grid-template-columns:1fr}
   .stats-inner{grid-template-columns:repeat(2,1fr)}
   .stat:nth-child(3){border-left:none}
@@ -375,9 +428,9 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
 <!-- ================= HERO ================= -->
 <header class="hero" id="top">
   <div class="hero-bg">
-    <div class="hero-slide" style="background-image:url('assets/prisonre.png')"></div>
-    <!-- <div class="hero-slide" style="background-image:url('assets/hero2.jpg')"></div>
-    <div class="hero-slide" style="background-image:url('assets/hero3.jpg')"></div> -->
+    <div class="hero-slide" style="background-image:url('assets/hero1.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('assets/hero2.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('assets/hero3.jpg')"></div>
   </div>
   <div class="hero-glow"></div>
 
@@ -448,18 +501,26 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
   </div>
 </section>
 
-<!-- ================= STUDIO ================= -->
+<!-- ================= DEVELOPERS ================= -->
 <section class="studio" id="studio">
   <div class="wrap">
-    <div class="studio-grid">
-      <div class="studio-copy reveal">
-        <h2>We build Roblox's<br>best <span>experiences</span></h2>
-      </div>
-      <div class="studio-copy reveal d1">
-        <p> <b>(i ai'd this text so you can see how some info looks, replace when publishing) !!!</b> -- RedShift Productions is an independent game studio on Roblox, home to a community of over <b>1.4 million members</b>. We're a small team, and we like it that way — every system, every map and every update gets built with care instead of getting rushed out the door.</p>
-        <p>We focus on roleplay and life experiences where the players make the story. Our job is to build the world and the tools; what happens on each server is up to the people in it. That philosophy is what <b>Breakout</b> is built on, and it's what everything we make next will be built on too.</p>
-        <p>Updates ship regularly, feedback from the community shapes what we work on, and we play our own games — a lot. If something isn't fun, it doesn't ship.</p>
-      </div>
+    <div class="devs-head reveal">
+      <h2>Meet the <span>Developers</span></h2>
+    </div>
+    <div class="marquee reveal d1">
+      <!-- filled from the Roblox group API; duplicated once for a seamless loop -->
+      <div class="marquee-track" id="devTrack"></div>
+    </div>
+  </div>
+
+  <!-- ---------- partner ---------- -->
+  <div class="partner">
+    <div class="partner-inner reveal">
+      <div class="partner-label">Partnered with</div>
+      <a class="partner-logo" href="https://twinatlas.com/" target="_blank" rel="noopener" data-sfx>
+        <img src="assets/twinatlas.png" alt="Twin Atlas">
+      </a>
+      <a class="btn" href="https://twinatlas.com/" target="_blank" rel="noopener" data-sfx>Visit Website</a>
     </div>
   </div>
 </section>
@@ -618,6 +679,51 @@ function setStat(id, val) {
   if (el.textContent !== '0') el.textContent = compact(val); // already animated -> update directly
 }
 loadRoblox();
+
+/* ---------- developers (Roblox group roles) ---------- */
+const DEV_ROLE_RANKS = [254, 100];   // shown in this order — 254 first
+
+async function loadDevs(){
+  const track = document.getElementById('devTrack');
+  try {
+    const roles = await (await fetch(`https://groups.roproxy.com/v1/groups/${GROUP_ID}/roles`)).json();
+    const wanted = DEV_ROLE_RANKS
+      .map(rank => (roles.roles || []).find(r => r.rank === rank))
+      .filter(Boolean);
+    if (!wanted.length) return;
+
+    // pull each role's members, keeping the role name attached to each person
+    const groups = await Promise.all(wanted.map(async role => {
+      const res = await (await fetch(`https://groups.roproxy.com/v1/groups/${GROUP_ID}/roles/${role.id}/users?limit=100&sortOrder=Asc`)).json();
+      return (res.data || []).map(u => ({...u, roleName: role.name}));
+    }));
+
+    const users = groups.flat().slice(0, 30);
+    if (!users.length) return;
+
+    // avatars in one batch
+    const ids = users.map(u => u.userId).join(',');
+    const thumbs = await (await fetch(`https://thumbnails.roproxy.com/v1/users/avatar?userIds=${ids}&size=420x420&format=Png&isCircular=false`)).json();
+    const byId = {};
+    (thumbs.data || []).forEach(t => { byId[t.targetId] = t.imageUrl; });
+
+    const esc = t => String(t).replace(/[<>&]/g,'');
+    const card = u => `
+      <div class="dev">
+        <div class="dev-av">${byId[u.userId] ? `<img src="${byId[u.userId]}" alt="" loading="lazy">` : ''}</div>
+        <div class="dev-name">${esc(u.displayName || u.username)}</div>
+        <div class="dev-role">${esc(u.roleName)}</div>
+      </div>`;
+
+    // duplicated so the -50% loop is seamless
+    const html = users.map(card).join('');
+    track.innerHTML = html + html;
+
+    // slower when there are more people, so speed stays consistent
+    track.style.animationDuration = Math.max(24, users.length * 3.2) + 's';
+  } catch(e) { /* section stays empty rather than showing broken cards */ }
+}
+loadDevs();
 
 /* ---------- sound (tiny synthesized clicks, no files) ---------- */
 let audioCtx = null, muted = false;
