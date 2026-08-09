@@ -249,10 +249,9 @@ section{position:relative}
   background:linear-gradient(to top,rgba(11,11,14,.5),transparent 40%);
 }
 .game-info h3{
-  font-family:var(--display);font-weight:700;font-style:italic;text-transform:uppercase;
-  font-size:clamp(40px,6vw,72px);line-height:.95;padding-right:.06em;
+  font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(40px,6vw,72px);line-height:.95;
 }
-.game-info h3 span{color:var(--red)}
 .game-desc{margin-top:22px;color:var(--gray);max-width:520px}
 .game-desc b{color:var(--white);font-weight:500}
 .game-meta{
@@ -335,7 +334,7 @@ section{position:relative}
 }
 
 /* ---------- partner ---------- */
-.partner{position:relative;border-top:1px solid var(--line);overflow:hidden}
+.partner{position:relative;border-top:1px solid var(--line);background:var(--ink2);overflow:hidden}
 .partner::before{
   content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);
   width:min(760px,100%);height:100%;pointer-events:none;
@@ -347,6 +346,7 @@ section{position:relative}
   display:flex;flex-direction:column;align-items:center;text-align:center;gap:28px;
 }
 .partner-label{
+  margin:0;
   font-family:var(--display);font-weight:600;text-transform:uppercase;
   font-size:clamp(22px,3.2vw,38px);line-height:1;letter-spacing:.02em;
 }
@@ -390,6 +390,12 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
 
 :focus-visible{outline:2px solid var(--red);outline-offset:3px}
 
+/* visually hidden but readable by screen readers / outline tools */
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   .reveal{opacity:1;transform:none}
@@ -421,7 +427,7 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
   <img src="assets/loader.png" alt="Loading">
 </div>
 
-<nav id="nav">
+<nav id="nav" aria-label="Main">
   <a class="nav-brand" href="#top" data-sfx>
     <img src="assets/logo-color.png" alt="RedShift Productions logo">
     <span>RED<b>SHIFT</b></span>
@@ -435,17 +441,19 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
   </div>
 </nav>
 
+<main>
+
 <!-- ================= HERO ================= -->
 <header class="hero" id="top">
   <div class="hero-bg">
-    <div class="hero-slide" style="background-image:url('assets/hero1.jpg')"></div>
-    <div class="hero-slide" style="background-image:url('assets/hero2.jpg')"></div>
-    <div class="hero-slide" style="background-image:url('assets/hero3.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('assets/prisonre.png')"></div>
+    <!-- <div class="hero-slide" style="background-image:url('assets/hero2.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('assets/hero3.jpg')"></div> -->
   </div>
   <div class="hero-glow"></div>
 
   <div class="hero-eyebrow"><b>RedShift Productions</b>presents</div>
-  <h1><img class="hero-title" src="assets/breakout.png" alt="Breakout"></h1>
+  <h1><img class="hero-title" src="assets/breakout.png" alt=""><span class="sr-only">Breakout</span></h1>
   <p class="hero-sub">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere.</p>
 
   <div class="hero-cta">
@@ -456,7 +464,8 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
 </header>
 
 <!-- ================= STATS ================= -->
-<div class="stats">
+<section class="stats" aria-labelledby="stats-title">
+  <h2 id="stats-title" class="sr-only">By the numbers</h2>
   <div class="stats-inner">
     <!-- data-count values below are fallbacks; live Roblox numbers replace them when available -->
     <div class="stat reveal"><div class="stat-num"><span class="count" id="statMembers" data-count="1400000">0</span><em>+</em></div><div class="stat-label">Members</div></div>
@@ -464,14 +473,14 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
     <div class="stat reveal d2"><div class="stat-num"><span class="count" id="statFavs" data-count="10000">0</span><em>+</em></div><div class="stat-label">Favorites</div></div>
     <div class="stat reveal d3"><div class="stat-num"><span class="count" id="statRating" data-count="90">0</span><em>%</em></div><div class="stat-label">Rating</div></div>
   </div>
-</div>
+</section>
 
 <!-- ================= GAME ================= -->
-<section id="game">
+<section id="game" aria-labelledby="games-title">
   <div class="wrap">
     <div class="sec-head reveal">
       <div>
-        <h2>Games</h2>
+        <h2 id="games-title">Games</h2>
       </div>
     </div>
 
@@ -512,33 +521,23 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
 </section>
 
 <!-- ================= DEVELOPERS ================= -->
-<section class="studio" id="studio">
+<section class="studio" id="studio" aria-labelledby="devs-title">
   <div class="wrap">
     <div class="devs-head reveal">
-      <h2>Meet the <span>Developers</span></h2>
+      <h2 id="devs-title">Meet the <span>Developers</span></h2>
     </div>
     <div class="marquee reveal d1">
       <!-- filled from the Roblox group API; duplicated once for a seamless loop -->
       <div class="marquee-track" id="devTrack"></div>
     </div>
   </div>
-
-  <!-- ---------- partner ---------- -->
-  <div class="partner">
-    <div class="partner-inner reveal">
-      <div class="partner-label">Partnered with</div>
-      <a class="partner-logo" href="https://twinatlas.com/" target="_blank" rel="noopener" data-sfx>
-        <img src="assets/twinatlas.png" alt="Twin Atlas">
-      </a>
-    </div>
-  </div>
 </section>
 
 <!-- ================= COMMUNITY ================= -->
-<section class="community" id="community">
+<section class="community" id="community" aria-labelledby="community-title">
   <div class="wrap">
     <div class="reveal">
-      <h2>1.4M+ members<br><span>Join our Community</span></h2>
+      <h2 id="community-title">1.4M+ members <br><span>Join our Community</span></h2>
       <p>Follow our development, catch when update drops first, and be there when the next event kicks off.</p>
       <div class="game-cta">
         <a class="btn solid" href="https://www.roblox.com/communities/35408513/Breakout-Community" target="_blank" rel="noopener" data-sfx>Roblox Community</a>
@@ -548,6 +547,18 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
     </div>
   </div>
 </section>
+
+<!-- ================= PARTNER ================= -->
+<section class="partner" id="partner" aria-labelledby="partner-title">
+  <div class="partner-inner reveal">
+    <h2 class="partner-label" id="partner-title">Partnered with</h2>
+    <a class="partner-logo" href="https://twinatlas.com/" target="_blank" rel="noopener" data-sfx>
+      <img src="assets/twinatlas.png" alt="Twin Atlas">
+    </a>
+  </div>
+</section>
+
+</main>
 
 <footer>
   <div class="foot">
