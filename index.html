@@ -88,13 +88,6 @@ nav.scrolled{background:rgba(11,11,14,.85);backdrop-filter:blur(14px);border-col
 .btn.solid:hover{color:var(--ink)}
 .btn.small{padding:10px 20px;font-size:12px}
 .btn-play{width:9px;height:11px;flex:0 0 auto;display:block}
-.mute-btn{
-  width:38px;height:38px;display:flex;align-items:center;justify-content:center;
-  border:1px solid var(--line);background:transparent;color:var(--gray);cursor:pointer;
-  transition:color .2s,border-color .2s;
-}
-.mute-btn:hover{color:var(--white);border-color:var(--gray2)}
-.mute-btn svg{width:16px;height:16px}
 .nav-toggle{display:none}
 
 /* ---------- preloader ---------- */
@@ -106,7 +99,7 @@ nav.scrolled{background:rgba(11,11,14,.85);backdrop-filter:blur(14px);border-col
 }
 #preload.done{opacity:0;visibility:hidden;pointer-events:none}
 #preload img{
-  width:clamp(120px,15vw,168px);height:auto;
+  width:clamp(160px,20vw,230px);height:auto;
   animation:loaderSpin 1.5s cubic-bezier(.65,0,.35,1) infinite,
             loaderPulse 3s ease-in-out infinite;
 }
@@ -185,7 +178,7 @@ body.loading .hero-cta{animation-play-state:paused}
   100%{opacity:1;transform:translateX(0)}
 }
 .hero-sub{
-  max-width:560px;margin:32px auto 0;color:var(--gray);font-size:clamp(15px,1.5vw,17px);
+  max-width:720px;margin:32px auto 0;color:var(--gray);font-size:clamp(14.5px,1.4vw,16px);
   animation:fadeUp .8s .35s cubic-bezier(.2,.8,.2,1) both;
 }
 .hero-sub b{color:var(--white);font-weight:500}
@@ -314,11 +307,11 @@ section{position:relative}
 }
 .marquee:hover .marquee-track{animation-play-state:paused}
 .dev-av{
-  position:relative;aspect-ratio:1;overflow:hidden;
+  position:relative;aspect-ratio:4/5;overflow:hidden;
   border:1px solid var(--line);background:linear-gradient(160deg,#191722,#0d0c11 70%);
   transition:border-color .25s,transform .35s cubic-bezier(.2,.8,.2,1);
 }
-.dev-av img{width:100%;height:100%;object-fit:cover}
+.dev-av img{width:100%;height:100%;object-fit:contain;padding:8px}
 .dev:hover .dev-av{border-color:var(--red);transform:translateY(-4px)}
 .dev:hover .dev-name{color:var(--red)}
 .dev-name{transition:color .25s}
@@ -428,16 +421,12 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
 </div>
 
 <nav id="nav" aria-label="Main">
-  <a class="nav-brand" href="#top" data-sfx>
+  <a class="nav-brand" href="#top">
     <img src="assets/logo-color.png" alt="RedShift Productions logo">
     <span>RED<b>SHIFT</b></span>
   </a>
   <div class="nav-right">
-    <button class="mute-btn" id="muteBtn" aria-label="Toggle sound" title="Toggle sound">
-      <svg id="sndOn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
-      <svg id="sndOff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
-    </button>
-    <a class="btn solid small" href="https://www.roblox.com/games/85247362414047/Breakout" target="_blank" rel="noopener" data-sfx><svg class="btn-play" viewBox="0 0 12 14" aria-hidden="true"><polygon points="0,0 12,7 0,14" fill="currentColor"/></svg><span>Play Now</span></a>
+    <a class="btn solid small" href="https://www.roblox.com/games/85247362414047/Breakout" target="_blank" rel="noopener"><svg class="btn-play" viewBox="0 0 12 14" aria-hidden="true"><polygon points="0,0 12,7 0,14" fill="currentColor"/></svg><span>Play Now</span></a>
   </div>
 </nav>
 
@@ -454,11 +443,11 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
 
   <div class="hero-eyebrow"><b>RedShift Productions</b>presents</div>
   <h1><img class="hero-title" src="assets/breakout.png" alt=""><span class="sr-only">Breakout</span></h1>
-  <p class="hero-sub">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere.</p>
+  <p class="hero-sub">Breakout evolved from the recently rebranded <b>Prisoner Life</b>, a classic Guards vs. Prisoners experience set within a prison environment and built around a modernized interpretation of old-school Roblox gameplay and aesthetics. As RedShift's first fully in-house title, Breakout marked the collective's debut as both a developer and publisher on the Roblox platform. Its success became a defining milestone for the collective, earning RedShift a place within Roblox's exclusive top developer program.</p>
 
   <div class="hero-cta">
-    <a class="btn solid" href="https://www.roblox.com/games/85247362414047/Breakout" target="_blank" rel="noopener" data-sfx>Play on Roblox</a>
-    <a class="btn" href="https://www.roblox.com/communities/35408513/Breakout-Community" target="_blank" rel="noopener" data-sfx>Join the Community</a>
+    <a class="btn solid" href="https://www.roblox.com/games/85247362414047/Breakout" target="_blank" rel="noopener">Play on Roblox</a>
+    <a class="btn" href="https://www.roblox.com/communities/35408513/Breakout-Community" target="_blank" rel="noopener">Join the Community</a>
   </div>
 
 </header>
@@ -491,30 +480,30 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
       </div>
       <div class="game-info reveal d1">
         <h3>Break<span>out</span></h3>
-        <p class="game-desc">i was too lazy to put a lorum ipson text, but i can make certain text in this text bolded <b>like this</b> but it depends i can change color and whatnot, anyway, you could honestly just put your game bio here. also all stats here is updated in real time using an API</p>
+        <p class="game-desc">Break out of prison, avoid security and escape, or keep everyone inside and control the prison. Pick a team, level up for more guns, and drive around the city looking for trouble. Earn cash and XP from objectives, arrests and escapes, then spend it on gear, upgrades and cars. Play with friends or on your own.</p>
         <div class="game-meta">
           <div><b id="metaPlaying">—</b><span>Players</span></div>
           <div><b id="metaVisits">—</b><span>Visits</span></div>
           <div><b id="metaFavs">—</b><span>Favorites</span></div>
         </div>
         <div class="game-cta">
-          <a class="btn solid" href="https://www.roblox.com/games/85247362414047/Breakout" target="_blank" rel="noopener" data-sfx>Play Breakout</a>
+          <a class="btn solid" href="https://www.roblox.com/games/85247362414047/Breakout" target="_blank" rel="noopener">Play Breakout</a>
         </div>
       </div>
     </div>
 
     <div class="roles">
       <div class="role reveal">
-        <h4>TEXT1</h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis</p>
+        <h4>Prisoner</h4>
+        <p>Work with other inmates, complete objectives, craft shivs and riot. Find a way out, or make one.</p>
       </div>
       <div class="role reveal d1">
-        <h4>TEXT2</h4>
-        <p>Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere.</p>
+        <h4>Guard</h4>
+        <p>Protect the prison, stop the prisoners and arrest criminals. Use sirens, handcuffs, weapons and teamwork to keep everyone under control.</p>
       </div>
       <div class="role reveal d2">
-        <h4>TEXT3</h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis</p>
+        <h4>Criminal</h4>
+        <p>Breach the armory, fight cops and help prisoners escape. Explore the city, rob locations and build a crew to take control.</p>
       </div>
     </div>
   </div>
@@ -540,9 +529,9 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
       <h2 id="community-title">1.4M+ members <br><span>Join our Community</span></h2>
       <p>Follow our development, catch when update drops first, and be there when the next event kicks off.</p>
       <div class="game-cta">
-        <a class="btn solid" href="https://www.roblox.com/communities/35408513/Breakout-Community" target="_blank" rel="noopener" data-sfx>Roblox Community</a>
+        <a class="btn solid" href="https://www.roblox.com/communities/35408513/Breakout-Community" target="_blank" rel="noopener">Roblox Community</a>
         <!-- Replace # with your Discord invite -->
-        <a class="btn" href="https://discord.com/invite/prisonerlife" data-sfx>Discord</a>
+        <a class="btn" href="https://discord.com/invite/prisonerlife">Discord</a>
       </div>
     </div>
   </div>
@@ -552,7 +541,7 @@ footer{border-top:1px solid var(--line);background:var(--ink2)}
 <section class="partner" id="partner" aria-labelledby="partner-title">
   <div class="partner-inner reveal">
     <h2 class="partner-label" id="partner-title">Partnered with</h2>
-    <a class="partner-logo" href="https://twinatlas.com/" target="_blank" rel="noopener" data-sfx>
+    <a class="partner-logo" href="https://twinatlas.com/" target="_blank" rel="noopener">
       <img src="assets/twinatlas.png" alt="Twin Atlas">
     </a>
   </div>
@@ -746,36 +735,6 @@ async function loadDevs(){
 }
 loadDevs();
 
-/* ---------- sound (tiny synthesized clicks, no files) ---------- */
-let audioCtx = null, muted = false;
-const muteBtn = document.getElementById('muteBtn');
-muteBtn.addEventListener('click', () => {
-  muted = !muted;
-  document.getElementById('sndOn').style.display = muted ? 'none' : '';
-  document.getElementById('sndOff').style.display = muted ? '' : 'none';
-  if (!muted) blip(880, .05, .04);
-});
-function ctx() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  if (audioCtx.state === 'suspended') audioCtx.resume();
-  return audioCtx;
-}
-function blip(freq, dur, vol) {
-  if (muted) return;
-  try {
-    const c = ctx(), o = c.createOscillator(), g = c.createGain(), f = c.createBiquadFilter();
-    o.type = 'triangle'; o.frequency.value = freq;
-    f.type = 'lowpass'; f.frequency.value = 2400;
-    g.gain.setValueAtTime(vol, c.currentTime);
-    g.gain.exponentialRampToValueAtTime(.0001, c.currentTime + dur);
-    o.connect(f); f.connect(g); g.connect(c.destination);
-    o.start(); o.stop(c.currentTime + dur);
-  } catch(e){}
-}
-document.querySelectorAll('[data-sfx]').forEach(el => {
-  el.addEventListener('click', () => blip(520, .09, .06));
-  el.addEventListener('mouseenter', () => blip(1200, .03, .015));
-});
 </script>
 </body>
 </html>
